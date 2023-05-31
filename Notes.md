@@ -178,3 +178,10 @@ There are several global objects and varaibles available for use without requiri
 9. `setInterval()`: The setInterval() function is a global function that repeatedly calls a callback function with a fixed time delay between each invocation.
 10. `clearTimeout()`: The clearTimeout() function is used to cancel a scheduled timeout created with setTimeout().
 11. `clearInterval()`: The clearInterval() function is used to cancel a recurring interval created with setInterval().
+
+# stringDecoder
+The string_decoder module in Node.js provides a way to decode buffer objects into strings. It is useful when working with binary data that needs to be converted into a string using a specific character encoding. The StringDecoder class in the string_decoder module can be used to efficiently decode buffers into strings, especially when dealing with multi-byte character encodings.
+
+# queryString
+The querystring module in Node.js provides utilities for parsing and formatting URL query strings. It allows you to work with the query string parameters of a URL, parse them into key-value pairs, and format them back into a query string.
+
