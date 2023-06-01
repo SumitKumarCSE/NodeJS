@@ -323,4 +323,4 @@ close();
 ```
 
 # Socket
-It seems like you may have meant to type "socket" instead of "soxket." In the context of networking, a socket is a programming interface that allows communication between processes over a network. Sockets enable data to be sent and received between a client and a server. In Node.js, you can work with sockets using the built-in net module. The net module provides an asynchronous network API for creating both TCP and UDP sockets.
+It seems like you may have meant to type "socket" instead of "socket." In the context of networking, a socket is a programming interface that allows communication between processes over a network. Sockets enable data to be sent and received between a client and a server. In Node.js, you can work with sockets using the built-in net module. The net module provides an asynchronous network API for creating both TCP and UDP sockets.
