@@ -185,3 +185,142 @@ The string_decoder module in Node.js provides a way to decode buffer objects int
 # queryString
 The querystring module in Node.js provides utilities for parsing and formatting URL query strings. It allows you to work with the query string parameters of a URL, parse them into key-value pairs, and format them back into a query string.
 
+# Web Modules
+1. `http`: The http module provides functionality for creating HTTP servers and making HTTP requests. It includes classes like http.Server and http.ClientRequest for building server-side and client-side HTTP applications.
+2. `https`: The https module extends the http module to provide support for creating HTTPS servers and making secure HTTPS requests. It includes classes like https.Server and https.Agent for working with SSL/TLS encrypted connections.
+3. `express`: Express is a popular web framework for Node.js that provides a higher-level abstraction for building web applications. It simplifies routing, middleware handling, and request/response handling. Express is built on top of the http module.
+4. `koa`: Koa is another web framework for Node.js that emphasizes middleware composition and asynchronous flow control. It provides a more modern and streamlined approach to building web applications compared to Express.
+5. `WebSocket`: The ws module enables WebSocket functionality in Node.js. It allows bidirectional communication between a client and a server over a single, long-lived connection, enabling real-time data transfer.
+6. `cookie-parser`: The cookie-parser module is a middleware that parses HTTP request cookies and makes them available in the request object. It simplifies handling and parsing of cookies in Node.js applications.
+7. `body-parser`: The body-parser module is a middleware that parses the request body of HTTP requests. It supports parsing JSON, URL-encoded, and multipart form data, making it easier to handle incoming request data.
+8. `cors`: The cors module is a middleware that enables Cross-Origin Resource Sharing (CORS) in Node.js applications. It allows controlling access to resources from different origins, making it useful for handling cross-domain requests.
+9. `helmet`: The helmet module is a middleware that helps secure Node.js applications by setting various HTTP headers to protect against common web vulnerabilities, such as cross-site scripting (XSS) and clickjacking.
+10. `multer`: The multer module is a middleware for handling file uploads in Node.js. It provides support for processing multipart/form-data requests and saving uploaded files to the server.
+
+# Assertion testing
+Assertion testing is a technique used in software development to verify that certain conditions or assumptions about code behavior are true. It involves making assertions, which are statements that express expected outcomes, and checking whether they hold true during the execution of the code. In Node.js, the assert module provides built-in support for assertion testing.
+```js
+const assert = require('assert');
+
+// Assertion testing using assert module
+function add(a, b) {
+  return a + b;
+}
+
+// Perform assertions to test the add function
+assert.strictEqual(add(2, 2), 4, 'Adding 2 and 2 should equal 4');
+assert.strictEqual(add(-1, 5), 4, 'Adding -1 and 5 should equal 4');
+assert.strictEqual(add(0, 0), 0, 'Adding 0 and 0 should equal 0');
+
+// If any assertion fails, an AssertionError is thrown
+```
+
+# Punycode
+The punycode module in Node.js provides functionality for encoding and decoding domain names that contain non-ASCII characters into a format that is compatible with the Domain Name System (DNS). This encoding scheme is known as Punycode. The punycode module allows you to convert Unicode domain names to ASCII-based representations and vice versa. 
+1. `punycode.encode(input)`: This method encodes a Unicode string containing domain names with non-ASCII characters into Punycode representation. Example: punycode.encode('résumé') returns 'xn--rsum-bpad'.
+2. `punycode.decode(input)`: This method decodes a Punycode string back into its original Unicode representation. Example: punycode.decode('xn--rsum-bpad') returns 'résumé'.
+3. `punycode.toASCII(domain)`: This method converts a domain name containing non-ASCII characters to an ASCII-based representation using Punycode encoding. Example: punycode.toASCII('résumé.com') returns 'xn--rsum-bpad.com'.
+4. `punycode.toUnicode(domain)`: This method converts a domain name encoded in Punycode back to its original Unicode representation. Example: punycode.toUnicode('xn--rsum-bpad.com') returns 'résumé.com'.
+
+# TTY
+The tty module provides functionality for working with terminal devices (TTY - Teletypewriter). It allows you to interact with the terminal, retrieve information about the terminal's capabilities, and perform terminal-related operations.
+
+# Express
+It is a popular web framework for NodeJS that simplifies the development of web applications and APIs. It provides a robust set of features for handling HTTP requests, routing, middleware, and more.
+## Routing
+Express allows you to define routes for handling different HTTP methods and URL patterns. Define routes using the app.METHOD(PATH, HANDLER) syntax, where METHOD is an HTTP method (e.g., get, post, put, delete) and PATH is the URL pattern to match:
+```js
+app.get('/', (req, res) => {
+  res.send('Hello, Express!');
+});
+```
+## Middleware
+Express middleware functions are functions that have access to the req (request) and res (response) objects. They can perform tasks like parsing request bodies, handling authentication, logging, and more. You can use middleware using app.use() or with specific routes:
+```js
+// Middleware applied to all routes
+app.use(express.json());
+
+// Middleware applied to specific route
+app.get('/user', (req, res, next) => {
+  // Middleware logic
+  next();
+});
+```
+## Static Files
+You can serve static files (e.g., CSS, images) using the express.static() middleware. Define a directory containing your static files and use the middleware in your application:
+```js
+// Serve static files from the "public" directory
+app.use(express.static('public'));
+```
+## Start the server
+Finally, start the Express server by listening on a specific port:
+```js
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+```
+
+# MongoDB
+MongoDB is a popular NoSQL database system that provides a flexible and scalable approach to storing and managing data. It is designed to handle large volumes of structured, semi-structured, and unstructured data.
+1. `Connecting to MongoDB`: In your Node.js application, require the mongodb module and use the MongoClient class to establish a connection to the MongoDB server:
+```js
+const { MongoClient } = require('mongodb');
+const uri = 'mongodb://localhost:27017/mydatabase'; // Connection URI
+const client = new MongoClient(uri);
+
+async function connect() {
+  try {
+    await client.connect(); // Connect to the MongoDB server
+    console.log('Connected to MongoDB');
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+  }
+}
+
+connect();
+```
+2. `Performing CRUD Operations`: Once connected, you can perform various CRUD (Create, Read, Update, Delete) operations on MongoDB collections. Here are some examples:
+  1. `Inserting documents`:
+```js
+const db = client.db('mydatabase'); // Get the database instance
+const collection = db.collection('users'); // Get the collection
+
+const user = { name: 'John', age: 30 };
+const result = await collection.insertOne(user);
+console.log('Inserted document:', result.insertedId);
+```
+  2. `Querying documents`:
+```js
+const query = { name: 'John' };
+const result = await collection.find(query).toArray();
+console.log('Queried documents:', result);
+```
+  3. `Updating documents`:
+```js
+const filter = { name: 'John' };
+const update = { $set: { age: 35 } };
+const result = await collection.updateOne(filter, update);
+console.log('Updated documents:', result.modifiedCount);
+```
+  4. Deleting documents:
+```js
+const filter = { name: 'John' };
+const result = await collection.deleteOne(filter);
+console.log('Deleted documents:', result.deletedCount);
+```
+3. `Closing the Connection`: When you're done working with the database, make sure to close the connection to release resources:
+```js
+async function close() {
+  try {
+    await client.close(); // Close the MongoDB connection
+    console.log('Disconnected from MongoDB');
+  } catch (err) {
+    console.error('Error closing MongoDB connection', err);
+  }
+}
+close();
+```
+
+# Socket
+It seems like you may have meant to type "socket" instead of "soxket." In the context of networking, a socket is a programming interface that allows communication between processes over a network. Sockets enable data to be sent and received between a client and a server. In Node.js, you can work with sockets using the built-in net module. The net module provides an asynchronous network API for creating both TCP and UDP sockets.
