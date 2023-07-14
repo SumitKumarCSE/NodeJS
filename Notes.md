@@ -6,12 +6,46 @@ Features of Node js:
 3. `JavaScript Everywhere`: Node.js enables developers to use JavaScript for both client-side and server-side development. This means that developers can use the same language and programming paradigms throughout the entire software stack, which can lead to increased productivity and code reuse.
 4. `NPM (Node Package Manager)`: NPM is the default package manager for Node.js and is one of the largest software registries in the world. It provides access to a vast ecosystem of open-source libraries and modules that can be easily integrated into Node.js applications, enhancing development speed and efficiency.
 
+# Working of Node JS
+Node.js accepts the request from the clients and sends the response, while working with the request node.js handles them with a single thread. To operate I/O operations or requests node.js use the concept of threads. Thread is a sequence of instructions that the server needs to perform. It runs parallel on the server to provide the information to multiple clients. Node.js is an event loop single-threaded language. It can handle concurrent requests with a single thread without blocking it for one request.
+
+Node.js basically works on two concept
+- Asynchronous
+- Non-blocking I/O
+
+`Non-blocking I/O`: Non-blocking i/o  means working with multiple requests without blocking the thread for a single request. I/O basically interacts with external systems such as files, databases. Node.js is not used for CPU-intensive work means for calculations, video processing because a single thread cannot handle the CPU works.
+
+`Asynchronous`: Asynchronous is executing a callback function. The moment we get the response from the other server or database it will execute a callback function. Callback functions are called as soon as some work is finished and this is because the node.js uses an event-driven architecture. The single thread doesn’t work with the request instead it sends the request to another system which resolves the request and it is accessible for another request.
+
+To handle the request node.js uses  
+- Event loop
+- Thread pool
+
+`Event loop`: The event loop contains a single thread and is responsible for handling easy tasks like executing callbacks and network I/O. When the program is to initialize all the top-level code is executed, the code is not in the callback function. All the applications code that is inside callback functions will run in the event loop. EventLoop is the heart of node.js. When we start our node application the event loop starts running right away. Most of the work is done in the event loop.
+
+Nodejs use event-driven-architecture.
+- Events are emitted.
+- Event loop picks them up.
+- Callbacks are called.
+
+`Event queue`: As soon as the request is sent the thread places the request into a queue. It is known as an event queue. The process like app receiving HTTP request or server or a timer will emit event as soon as they are done with the work and event loop will pick up these events and call the callback functions that are associated with each event and response is sent to the client. 
+
+The event loop is an indefinite loop that continuously receives the request and processes them. It checks the queue and waits for the incoming request indefinitely.
+
+`Thread pool`: Though node.js is single-threaded it internally maintains a thread pool. When non-blocking requests are accepted there are processed in an event loop, but while accepting blocking requests it checks for available threads in a thread pool, assigns a thread to the client’s request which is then processed and send back to the event loop, and response is sent to the respective client.
+
 # REPL
 The REPL feature of Nodejs is useful in experimenting with Nodejs codes and to debug JS codes:
 1. Read: Reads user's input, parses the input into JS data.
 2. Eval: Takes and evaluates the data structure.
 3. Print: Prints the result
 4. Loop: Loops the above command until the user presses ctrl-c twice.
+
+# package.json
+The package.json file is a metadata file that provides information about a Node.js project and its dependencies. It serves as the central configuration file for the project and contains various details and settings. The package.json file includes name, version, description, author, license, dependencies, and scripts.
+
+# Modules
+Modules in Node.js are encapsulated units of code that organize and structure functionality in a modular and reusable manner. Node.js supports the CommonJS module system, allowing developers to create and use modules easily. There are two main types of modules: core modules and user-defined modules. Core modules are built-in modules that come with Node.js and provide essential functionalities. User-defined modules are created by developers to organize their own code into reusable units. Each module can export functions, objects, or values for use in other modules. By using the require() function, modules can be imported and their exported components can be accessed. Modules promote modularity, code reusability, and maintainability, enabling developers to build scalable and organized applications by breaking down the codebase into smaller, manageable components.
 
 `require`: It is built-in function that is used to import modules and their functionality into your code. It allows you to access functions, objects, or variables defined in other modules, making them available for use in your application.
 
@@ -38,6 +72,28 @@ It is a built-in module that provides functionality for interacting with the fil
 3. Working with directories: fs.mkdir(), fs.mddirSync(), fs.readdir(), fs.readdirSync()
 4. File Stats and Information: fs.stat(), fs.statSync()
 5. File manipulation: fs.rename(), fs.renameSync(), fs.unlink(), fs.unlinkSync()
+
+Difference between async and sync file operations:<br />
+The synchronous method blocks the execution of further code until the file is completely read. It returns the contents of the file as a string or buffer. The code execution halts until the entire file is read, and then the data is logged to the console.
+
+The asynchronous method reads the file without blocking the execution of other code. It takes a callback function that is executed when the file reading is complete. The code execution continues, and when the file reading is complete, the data is logged to the console.
+
+# http module
+The http module is a core module in Node.js that provides functionality for creating HTTP servers and making HTTP requests. It allows us to interact with the HTTP protocol, enabling our Node.js applications to handle HTTP-related operations. Main functionalities of http module:
+1. `Creating an HTTP server`: The http.createServer() method is used to create an HTTP server instance. We can specify a callback function that is called for every incoming HTTP request to handle the request and send a response. The server can listen on a specific port for incoming requests using the server.listen() method.
+2. `Handling Incoming Requests`: The server's callback function receives two parameters: request and response. The request object represents the incoming HTTP request and contains information like URL, headers, and payload. The response object allows we to send an HTTP response back to the client with the desired status code, headers, and body.
+3. `Making HTTP request`: The http.request() method is used to make an HTTP request to a remote server. We can specify the request method (GET, POST, etc.), headers, and request payload. The request object returned by http.request() allows we to handle the response from the server.
+4. `Handling events`: The HTTP server and client objects emit various events that you can listen to, such as request, response, data, end, error, and more. Event-driven programming allows you to handle events asynchronously, enabling efficient and non-blocking I/O operations.
+
+# path
+The path module in NodeJS provides utilities for working with file and directory paths. If offers methods to mnaipulate and transform file paths, resolve relative paths, extract file extensions, and more.
+1. Joining Paths: path.join([...paths]): Joins multiple path segments together using the platform-specific separator and returns the resulting path. Example: path.join('/path', 'to', 'file.txt') returns '/path/to/file.txt'.
+2. Resolving Paths: path.resolve([...paths]): Resolves an absolute path relative to the current working directory. Example: path.resolve('path', 'to', 'file.txt') returns the absolute path based on the current working directory.
+3. Getting Directory and File Names: path.dirname(path): Returns the directory name of a path. Example: path.dirname('/path/to/file.txt') returns '/path/to'.
+path.basename(path, [ext]): Returns the last portion of a path, optionally excluding the file extension. Example: path.basename('/path/to/file.txt') returns 'file.txt'.
+4. File Extension Manipulation: path.extname(path): Returns the file extension of a path. Example: path.extname('/path/to/file.txt') returns '.txt'. path.parse(path): Returns an object with the individual components of a file path (root, dir, base, ext, name). Example: path.parse('/path/to/file.txt') returns { root: '/', dir: '/path/to', base: 'file.txt', ext: '.txt', name: 'file' }.
+5. Normalizing Paths: path.normalize(path): Normalizes a path by resolving '.' and '..' segments. Example: path.normalize('/path/../file.txt') returns '/file.txt'.
+6. Checking Path Existence: fs.existsSync(path): Checks if a file or directory exists at the specified path synchronously and returns a boolean value. Example: fs.existsSync('/path/to/file.txt') returns true or false depending on the existence of the file or directory.
 
 # Events and Callbacks
 Event loop is a fundamental part of node architecture. It a mechanism that allows an event-driven non-blocking I/O model. The event loop enables NodeJS to handle multiple requests and perform I/O operations without blocking the execution of other code.
@@ -66,7 +122,7 @@ myEmitter.emit('event', 'Parameter 1', 'Parameter 2');
 ```
 
 # EventEmitters
-The EventEmitter class in NodeJS is a key component of hte event-driven architecture and provides an implementation of hte observer pattern. It allows objects to emit named events and register listeners to those events.
+The EventEmitter class in NodeJS is a key component of the event-driven architecture and provides an implementation of the observer pattern. It allows objects to emit named events and register listeners to those events.
 1. `on(eventName, listener)`: Registers a listener function to be called whenever the specified event is emitted. Equivalent to `addListener(eventName, listener)`.
 2. `once(eventName, listener)`: Registers a one-time listener function that will be called only the first time the event is emitted. After the event is emitted and the listener is invoked, it is automatically removed.
 3. `emit(eventName, [...args])`: Emits (triggers) the specified event, invoking all registered listeners with the provided arguments. Any additonal arguments after the event name are passed to the listeners.
@@ -154,16 +210,6 @@ NodeJS provides various types of streams, including readable streams, writable s
 5. `Piping Streams`: The fs.createReadStream('input.txt') reads data from the input.txt file, and the fs.createWriteStream('output.txt') writes the data to the output.txt file. The readableStream is piped to the writableStream using .pipe(), which automatically handles the data flow between the two streams.
 6. `Chaining Streams (Compression)`: The fs.createReadStream('input.txt') reads data from the input.txt file. The data is then piped through zlib.createGzip() to compress it, and finally piped to fs.createWriteStream('output.txt.gz') to write the compressed data to the output.txt.gz file. This demonstrates how multiple streams can be chained together to perform sequential operations.
 7. `Chaining Streams (Decompression)`: The fs.createReadStream('output.txt.gz') reads data from the output.txt.gz file, which contains the previously compressed data. The data is then piped through zlib.createGunzip() to decompress it, and finally piped to fs.createWriteStream('decompressed.txt') to write the decompressed data to the decompressed.txt file.
-
-# Path
-The path module in NodeJS provides utilities for working with file and directory paths. If offers methods to mnaipulate and transform file paths, resolve relative paths, extract file extensions, and more.
-1. Joining Paths: path.join([...paths]): Joins multiple path segments together using the platform-specific separator and returns the resulting path. Example: path.join('/path', 'to', 'file.txt') returns '/path/to/file.txt'.
-2. Resolving Paths: path.resolve([...paths]): Resolves an absolute path relative to the current working directory. Example: path.resolve('path', 'to', 'file.txt') returns the absolute path based on the current working directory.
-3. Getting Directory and File Names: path.dirname(path): Returns the directory name of a path. Example: path.dirname('/path/to/file.txt') returns '/path/to'.
-path.basename(path, [ext]): Returns the last portion of a path, optionally excluding the file extension. Example: path.basename('/path/to/file.txt') returns 'file.txt'.
-4. File Extension Manipulation: path.extname(path): Returns the file extension of a path. Example: path.extname('/path/to/file.txt') returns '.txt'. path.parse(path): Returns an object with the individual components of a file path (root, dir, base, ext, name). Example: path.parse('/path/to/file.txt') returns { root: '/', dir: '/path/to', base: 'file.txt', ext: '.txt', name: 'file' }.
-5. Normalizing Paths: path.normalize(path): Normalizes a path by resolving '.' and '..' segments. Example: path.normalize('/path/../file.txt') returns '/file.txt'.
-6. Checking Path Existence: fs.existsSync(path): Checks if a file or directory exists at the specified path synchronously and returns a boolean value. Example: fs.existsSync('/path/to/file.txt') returns true or false depending on the existence of the file or directory.
 
 # Global Objects
 There are several global objects and varaibles available for use without requiring any explicit import or require statements. These global objects provide essential functionality and utilities that can be accessed from any module in your application.
